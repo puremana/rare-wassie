@@ -4,12 +4,16 @@
   <h2>Search Wassie</h2>
 
   <div>
-    <input type="text" placeholder="Search Wassie..."  v-model="searchInput" />
+    <input type="text" placeholder="Search Wassie ID..."  v-model="searchInput" />
     <button @click="search()">Search</button>
   </div>
 
   <div v-if="showWassie" class="showWassie">
     <Wassie :name="showWassie.name" :id="showWassie.id" :image="showWassie.image" :rarity="showWassie.rarity" :order="showWassie.order" />
+  </div>
+
+  <div v-if="showError" class="showWassie">
+    {{ showError }}
   </div>
 
   <h3>Top 10</h3>
@@ -31,13 +35,13 @@
     <br />
     Beak 1/1
     <br />
-    Belly Colour": 1/1
+    Belly Colour: 1/1
     <br />
     Body: 1/1
     <br />
     Body Colour: 1/1
     <br />
-    Clothes": 1/1
+    Clothes: 1/1
     <br />
     Couch Bottom: 1/12094
     <br />
@@ -72,6 +76,10 @@
     Total rarity score: 96763
 
   </details>
+
+  <div class="footer">
+    Made with 💖 by <a href="https://jeremyshaw.co.nz/" target="_blank" rel="noopener norefferer">Jeremy</a>
+  </div>
 </template>
 
 <script>
@@ -87,15 +95,24 @@ export default {
     return {
       ranked: ranked,
       searchInput: "",
-      showWassie: null
+      showWassie: null,
+      showError: ""
     };
   },
   methods: {
     search() {
+      let found = false;
       for (var i=0, iLen=ranked.length; i<iLen; i++) {
         if (ranked[i].name == this.searchInput || ranked[i].id == this.searchInput) {
           this.showWassie = ranked[i];
+          found = true;
+          continue;
         }
+      }
+      if (!found) {
+        this.showError = "No wassie found with that ID."
+      } else {
+        this.showError = "";
       }
     }
   }
@@ -103,13 +120,17 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 30px;
+}
+h1 {
+  font-size: 2.5em;
 }
 .showWassie {
   width: 300px;
@@ -118,7 +139,24 @@ export default {
 .wassieTen {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+}
+@media (max-width: 1200px) {
+  .wassieTen {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media (max-width: 800px) {
+  .wassieTen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 400px) {
+  .wassieTen {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }
 .calculated {
   padding: 40px 20px;

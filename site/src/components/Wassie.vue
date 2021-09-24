@@ -23,7 +23,7 @@ export default {
 
 <style scoped>
     .wassie {
-        
+        padding: 0 10px;
     }
     .wassie img {
         object-fit: cover;
