@@ -1,4 +1,8 @@
 <template>
+  <div class="github-container">
+    <iframe class="github-button" src="https://ghbtns.com/github-btn.html?user=puremana&repo=rare-wassie&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+  </div>
+
   <h1>Rare Wassies</h1>
   
   <h2>Search Wassie</h2>
@@ -21,7 +25,6 @@
   <div class="wassieTen">
     <Wassie v-for="index in 10" :key="index" :name="ranked[index].name" :id="ranked[index].id" :image="ranked[index].image" :rarity="ranked[index].rarity" :order="ranked[index].order" />
   </div>
-
 
   <details class="calculated">
     <summary>How is this calculated?</summary>
@@ -129,6 +132,17 @@ export default {
   color: #2c3e50;
   margin-top: 30px;
 }
+.github-container {
+  position: absolute;
+  display: inline-block;
+  right: 0;
+  top: 30px;
+}
+.github-container .github-button {
+  position: absolute;
+  right: 0;
+  margin-bottom: -20px;
+}
 h1 {
   font-size: 2.5em;
 }
@@ -147,6 +161,9 @@ h1 {
   }
 }
 @media (max-width: 800px) {
+  h1 {
+    padding-top: 40px;
+  }
   .wassieTen {
     display: grid;
     grid-template-columns: 1fr 1fr;
