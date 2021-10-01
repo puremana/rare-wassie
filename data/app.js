@@ -9,6 +9,9 @@ const jsonStream2 = StreamArray.withParser();
 let atts = [];
 let wassieCount = 0;
 
+// const rarityConfig = "totalTraitRarity";
+const rarityConfig = "averageTraitRarity";
+
 jsonStream.on('data', ({key, value}) => {
     // Get totals
     for (v in value) {
@@ -38,13 +41,35 @@ jsonStream.on('end', () => {
 let ranked = []
 let count = 1;
 jsonStream2.on('data', ({key, value}) => {
-    // Get rarity
     let rarity = 0;
-    for (v in value) {
-        if (!['ID', 'image', 'name'].includes(v)) {
-            rarity = rarity + atts[v][value[v]]
+    let traits = 0;
+
+    if (rarityConfig === "totalTraitRarity") {
+        for (v in value) {
+            if (!['ID', 'image', 'name'].includes(v)) {
+                rarity = rarity + atts[v][value[v]];
+            }
         }
+    } else if (rarityConfig === "averageTraitRarity") {
+        for (v in value) {
+            if (!['ID', 'image', 'name'].includes(v)) {
+                if (value[v] !== "" && value[v] !== "None") {
+                    // if (value['ID'] == '9653') {
+                    //     console.log(v);
+                    //     console.log(atts[v][value[v]]);
+                    //     console.log(rarity);
+                    //     console.log(traits);
+                    // }
+                    
+                    rarity = rarity + atts[v][value[v]];
+                    traits++;
+                }
+            }
+        }
+        rarity = rarity / traits;
     }
+
+
     ranked.push({'id': value.ID, 'name': value.name, 'image': value.image, 'rarity': rarity});
     count++;
 });

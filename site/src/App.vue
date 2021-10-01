@@ -23,7 +23,7 @@
   <h3>Top 10</h3>
   
   <div class="wassieTen">
-    <Wassie v-for="index in 10" :key="index" :name="ranked[index].name" :id="ranked[index].id" :image="ranked[index].image" :rarity="ranked[index].rarity" :order="ranked[index].order" />
+    <Wassie v-for="index in 10" :key="index" :name="ranked[index - 1].name" :id="ranked[index - 1].id" :image="ranked[index - 1].image" :rarity="ranked[index - 1].rarity" :order="ranked[index - 1].order" />
   </div>
 
   <details class="calculated">
