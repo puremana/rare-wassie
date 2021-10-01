@@ -10,7 +10,9 @@ let atts = [];
 let wassieCount = 0;
 
 // const rarityConfig = "totalTraitRarity";
-const rarityConfig = "averageTraitRarity";
+// const rarityConfig = "averageTraitRarity";
+// const rarityConfig = "statisticalRarity";
+const rarityConfig = "averageStatisticalRarity";
 
 jsonStream.on('data', ({key, value}) => {
     // Get totals
@@ -67,8 +69,34 @@ jsonStream2.on('data', ({key, value}) => {
             }
         }
         rarity = rarity / traits;
+    } else if (rarityConfig === "statisticalRarity") {
+        for (v in value) {
+            if (!['ID', 'image', 'name'].includes(v)) {
+                // Get percentage
+                let percentage = atts[v][value[v]] / wassieCount;
+                if (rarity === 0) {
+                    rarity = percentage;
+                } else {
+                    rarity = rarity * percentage;
+                }
+            }
+        }
+    } else if (rarityConfig === "averageStatisticalRarity") {
+        for (v in value) {
+            if (!['ID', 'image', 'name'].includes(v)) {
+                // if (value[v] !== "" && value[v] !== "None") {
+                if (value[v] !== "") {
+                    // Get percentage
+                    let percentage = atts[v][value[v]] / wassieCount;
+                    if (rarity === 0) {
+                        rarity = percentage;
+                    } else {
+                        rarity = rarity * percentage;
+                    }
+                }
+            }
+        }
     }
-
 
     ranked.push({'id': value.ID, 'name': value.name, 'image': value.image, 'rarity': rarity});
     count++;
