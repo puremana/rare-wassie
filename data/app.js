@@ -96,7 +96,15 @@ jsonStream2.on('data', ({key, value}) => {
                 }
             }
         }
+
+        // Make rarity more readable
+        for (let i = 0; i < 5; i++) {
+            rarity = Math.sqrt(rarity)
+        }
+        rarity = rarity * 10000;
     }
+
+
 
     ranked.push({'id': value.ID, 'name': value.name, 'image': value.image, 'rarity': rarity});
     count++;

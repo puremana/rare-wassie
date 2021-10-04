@@ -3,7 +3,7 @@
     <img :src="image" />
     <div class="name">{{ name }}</div>
     <div class="order">More rare than <span class="orderRarity">{{((1 - order) * 100).toFixed(4)}}%</span> of all Wassies</div>
-    <div class="rarity">Rarity score: {{ rarity }}</div>
+    <div class="rarity">Rarity score: {{ rarity.toFixed(2) }}</div>
 
   </div>
 </template>
