@@ -26,59 +26,77 @@
     <Wassie v-for="index in 10" :key="index" :name="ranked[index - 1].name" :id="ranked[index - 1].id" :image="ranked[index - 1].image" :rarity="ranked[index - 1].rarity" :order="ranked[index - 1].order" />
   </div>
 
-  <details class="calculated">
-    <summary>How is this calculated?</summary>
-    I take the total number of all of the attributes (rarity score) and use this to rank against all other wassies.
-    <br />
-    <br />
-    How can a couch be more rare than Wassie 0? Here is an example of the rarity score using Wassie 0.
-    <br />
-    <br />
-    Background: 1/1
-    <br />
-    Beak 1/1
-    <br />
-    Belly Colour: 1/1
-    <br />
-    Body: 1/1
-    <br />
-    Body Colour: 1/1
-    <br />
-    Clothes: 1/1
-    <br />
-    Couch Bottom: 1/12094
-    <br />
-    Couch Colour: 1/12094
-    <br />
-    Eyes: 1/1
-    <br />
-    Face: 1/12094
-    <br />
-    Feet: 1/1
-    <br />
-    Hat: 1/1
-    <br />
-    Left Arm: 1/12094
-    <br />
-    Right Arm: 1/12094
-    <br />
-    Rug: 1/12094
-    <br />
-    Seat: 1/12094
-    <br />
-    Sigil: 1/1
-    <br />
-    Wassie Colour: 1/12094
-    <br />
-    Wieldable: 1/1
-    <br />
-    <br />
-    = 1 + 1 + 1 + 1 + 1 + 1 + 12094 + 12094 + 1 + 12094 + 1 + 1 + 12094 + 12094 + 12094 + 12094 + 1 + 12094 + 1
-    <br />
-    <br />
-    Total rarity score: 96763
+  <div class="details-container">
+    <details>
+      <summary>How is this calculated?</summary>
+      The current rarity method I am using is called statistical rarity, using only non-null attributes. How this works is I multiply the rarity percentage of each attribute together, then rank the wassies accordingly.
+      <br />
+      <br />
+      Lets see how this works with Wassie 9653, a seemingly one off wassie yet not as rare as couch wassies according to this method.
+      <br />
+      <br />
+      Background: 13/12344
+      <br />
+      Beak 9047/12344
+      <br />
+      Belly Colour: 451/12344
+      <br />
+      Body: 1/12344
+      <br />
+      Body Colour: 451/12344
+      <br />
+      Clothes: 10638/12344
+      <br />
+      Couch Bottom: null
+      <br />
+      Couch Colour: null
+      <br />
+      Eyes: 1274/12344
+      <br />
+      Face: null
+      <br />
+      Feet: 5526/12344
+      <br />
+      Hat: 7097/12344
+      <br />
+      Left Arm: null
+      <br />
+      Right Arm: null
+      <br />
+      Rug: null
+      <br />
+      Seat: null
+      <br />
+      Sigil: 1458/12344
+      <br />
+      Wassie Colour: null
+      <br />
+      Wieldable: 10111/12344
+      <br />
+      <br />
+      = 13/12344 * 9047/12344 * 451/12344 * 1/12344 * 451/12344 * 10638/12344 * 1274/12344 * 5526/12344 * 7097/12344 * 1458/12344 * 1458/12344
+      <br />
+      <br />
 
-  </details>
+    </details>
+    <details>
+      <summary>Why use statistical rarity?</summary>
+      I have tried using other methods such as total trait rarity, and average trait rarity, but the problem was that one off wassies such as Wassie 0 and other one off wassies weren't being recognized as being that rare.
+      <br />
+      <br />
+      This is because there is such a small number of a couch wassies. Statistical rarity using non-null attributes seems to be the best to exaggerate the one off trait rarity.
+      <br />
+      <br />
+      Statistical rarity is also one of the most common rarity ranking methods in NFTs currently.
+    </details>
+    <details>
+      <summary>What is the rarity score?</summary>
+      Once I calculate the statistical rarity for each wassie, I perform some operations to make the rarity more readable. This involves squaring the number 5 times then multipling it by 10000.
+      <br />
+      <br />
+      This makes it more easy to read and see the gap between different wassies, while keeping the ranking order the same.
+    </details>
+  </div>
 
   <div class="footer">
     Made with 💖 by <a href="https://jeremyshaw.co.nz/" target="_blank" rel="noopener norefferer">Jeremy</a>
@@ -175,7 +193,14 @@ h1 {
     grid-template-columns: 1fr;
   }
 }
-.calculated {
-  padding: 40px 20px;
+.details-container {
+  padding: 20px 0 20px 0;
+}
+details {
+  padding: 5px 20px 5px 20px;
+  font-size: 14px;
+}
+summary {
+  font-size: 18px;
 }
 </style>

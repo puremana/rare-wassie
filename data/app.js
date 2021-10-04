@@ -88,6 +88,14 @@ jsonStream2.on('data', ({key, value}) => {
                 if (value[v] !== "") {
                     // Get percentage
                     let percentage = atts[v][value[v]] / wassieCount;
+
+                    // if (value['ID'] == '9653') {
+                    //     console.log(v);
+                    //     console.log(atts[v][value[v]]);
+                    //     console.log(wassieCount);
+                    //     console.log(percentage);
+                    // }
+
                     if (rarity === 0) {
                         rarity = percentage;
                     } else {
