@@ -13,7 +13,7 @@
   </div>
 
   <div v-if="showWassie" class="showWassie">
-    <Wassie :name="showWassie.name" :id="showWassie.id" :image="showWassie.image" :rarity="showWassie.rarity" :order="showWassie.order" />
+    <Wassie :name="showWassie.name" :id="showWassie.id" :image="showWassie.image" :rarity="showWassie.rarity" :order="showWassie.order" :rank="wassieRank" :totalRank="ranked.length" />
   </div>
 
   <div v-if="showError" class="showWassie">
@@ -117,7 +117,8 @@ export default {
       ranked: ranked,
       searchInput: "",
       showWassie: null,
-      showError: ""
+      showError: "",
+      wassieRank: null
     };
   },
   methods: {
@@ -126,6 +127,7 @@ export default {
       for (var i=0, iLen=ranked.length; i<iLen; i++) {
         if (ranked[i].name == this.searchInput || ranked[i].id == this.searchInput) {
           this.showWassie = ranked[i];
+          this.wassieRank = i + 1;
           found = true;
           continue;
         }

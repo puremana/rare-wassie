@@ -2,7 +2,12 @@
   <div class="wassie">
     <img :src="image" />
     <div class="name">{{ name }}</div>
-    <div class="order">More rare than <span class="orderRarity">{{((1 - order) * 100).toFixed(4)}}%</span> of all Wassies</div>
+    <div class="order">
+      More rare than <span class="orderRarity">{{((1 - order) * 100).toFixed(4)}}%</span> of all Wassies
+      <div v-if="rank">
+        (Rank {{ rank }}/{{totalRank}})
+      </div>
+    </div>
     <div class="rarity">Rarity score: {{ rarity.toFixed(2) }}</div>
 
   </div>
@@ -16,7 +21,9 @@ export default {
     id: Number,
     image: String,
     rarity: Number,
-    order: Number
+    order: Number,
+    rank: Number,
+    totalRank: Number
   }
 }
 </script>
@@ -35,6 +42,7 @@ export default {
     }
     .order {
         font-size: 12px;
+        padding-bottom: 4px;
     }
     .orderRarity {
         font-weight: 700;
